@@ -1,0 +1,7 @@
+-- SISTEMA BATERÍAS SAMAN
+#noedit
+#system win
+#model clarion dll
+#pragma debug(vid=>full)
+#compile principa.clw
+#link principa.exe

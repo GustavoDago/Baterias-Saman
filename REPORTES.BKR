@@ -1,0 +1,419 @@
+[REPORTS]
+Sumaplacas REPORT,FONT('Arial',10),PRE(Suma),THOUS,AT(394,1996,7462,8692),LINE(-2),MARGINS(394,1333,394,1000) !suma las placas del período indicado
+          HEADER,FONT('Times New Roman',11,0,4796),AT(394,1333,7458,663)
+            STRING('Tam.'),FONT(,,,4196),AT(3554,0),LINE(0)
+            STRING('Nombre'),FONT(,,,4196),AT(6450,0,614),LINE(0)
+            STRING('Nueva'),FONT(,,,4196),AT(10,0),LINE(0)
+            STRING('Número'),FONT(,,,4196),AT(471,0),LINE(0)
+            STRING('Tipo'),FONT(,,,4196),AT(1012,0),LINE(0)
+            STRING('Placa'),FONT(,,,4196),AT(1429,0),LINE(0)
+            STRING('Caja'),FONT(,,,4196),AT(1846,0),LINE(0)
+            STRING('F.alta'),FONT(,,,4196),AT(2252,0),LINE(0)
+            STRING('Pos.'),FONT(,,,4196),AT(2700,0),LINE(0)
+            STRING('Cant.'),FONT(,11,,4196),AT(3085,0,302),LINE(0)
+            STRING('Vehículo'),FONT(,,,4196),AT(4023,0),LINE(0)
+            STRING('Apellido'),FONT(,,,4196),AT(5512,0),LINE(0)
+            LINE,LINEWIDTH(15),AT(0,168,9688,0)
+          END
+_REPORT_  BREAK
+            HEADER,ALONE,AT(394,1333,,10688)
+              TEXT('Placas'),FONT('Times New Roman',20,0,4796),CENTER,RESIZE,AT(2002,2271,3229,2083)
+              STRING('Totalizar placas usadas entre el'),AT(2689,3744,2073),LINE(18)
+              STRING(@D13),USE(Inicial),AT(2919,4576),LINE(22)
+              STRING('y el'),AT(3481,4576,271),LINE(22)
+              STRING(@D13),USE(Final),AT(4085,4576),LINE(22)
+            END
+_TOTALS_    BREAK
+_BREAK2       BREAK(HIS:Tamanio)
+                HEADER,AT(4,0,7462,624)
+                  STRING(@s2),FONT('Rockwell',),USE(HIS:Tamanio),AT(2946,0),LINE(0)
+                  STRING('TAMAÑO DE PLACA:'),FONT('Rockwell',),AT(1404,0),LINE(0)
+                END
+_BREAK1         BREAK(HIS:Tamaño)
+Detail1           DETAIL,FONT('Abadi MT Condensed Light',8,0),AT(4,0,7462,312)
+                    STRING(@s1),USE(HIS:NUEVA),AT(51,0,208),LINE(0)
+                    STRING(@n6),CENTER,USE(HIS:NUMERO),AT(398,0,438),LINE(0)
+                    STRING(@s9),CENTER,USE(HIS:TIPO),AT(908,0,469),LINE(0)
+                    STRING(@s4),CENTER,USE(HIS:PLACA),AT(1429,0,323),LINE(0)
+                    STRING(@s3),USE(HIS:CAJA),AT(1835,0,240),LINE(0)
+                    STRING(@D17),USE(HIS:FECHA1),AT(2241,0,437),LINE(0)
+                    STRING(@s1),USE(HIS:POSIC),AT(2741,0,145),LINE(0)
+                    STRING(@n6),FONT(,,,700),CENTER,USE(HIS:CANTPLACAS),AT(3064,0,448),LINE(0)
+                    STRING(@s25),CENTER,USE(HIS:VEHICULO),AT(3800,0,1312),LINE(0)
+                    STRING(@s20),USE(CLI:Apellido),AT(5206,0,1136),LINE(0)
+                    STRING(@s20),USE(CLI:Nombres),AT(6377,0,1062),LINE(0)
+                    STRING(@s2),USE(HIS:Tamanio),AT(3616,0),LINE(0)
+                  END
+                END
+                FOOTER,AT(4,6,7462,832)
+                  STRING(@N8),FONT('AvantGarde Md BT',10),CENTER,USE(Sum_CANTPLACAS),AT(3540,208,958),LINE(1)
+                  STRING('Cantidad de placas usadas en el período:'),FONT('AvantGarde Md BT',),CENTER,AT(446,208,2989),LINE(1)
+                  LINE,LINEWIDTH(10),AT(239,453,6813,0)
+                END
+              END
+              FOOTER,FONT('Arial',8,0,700),AT(4,7,7462,1009)
+                STRING(@n6),FONT('Arial',12,,700),CENTER,USE(Todas),AT(3342,156),LINE(1)
+                STRING('TOTAL PLACAS:'),FONT(,12),AT(1919,156),LINE(1)
+              END
+            END
+          END
+Sum_CANTPLACAS TOTAL(@n6),RESET(_BREAK2),SUM,USE(HIS:CANTPLACAS) !Sum of CANTPLACAS
+Inicial RUNTIME(@D13),PROMPT('Especifique el mes') !Especifique el mes
+Final   RUNTIME(@D13),PROMPT('Especifique el mes final') !Especifique el mes final
+Todas   TOTAL(@n6),SUM,USE(HIS:CANTPLACAS) !suma de todas las placas
+        END
+nue_rep REPORT,FONT('Arial',10),PRE(Código),THOUS,AT(394,1034,7462,8874),LINE(-2),MARGINS(394,813,394,1390) !Baterías ordenadas por nueva/reparada y número
+          HEADER,FONT('Times New Roman',11,0,4796),AT(394,813,7458,221)
+            LINE,LINEWIDTH(15),AT(2,237,9688,0)
+            STRING('Nombres'),FONT(,,,400),AT(6554,0),LINE(0)
+            STRING('Apellido'),FONT(,,,400),AT(5575,0),LINE(0)
+            STRING('Tamaño'),FONT(,,,400),AT(4991,0),LINE(0)
+            STRING('Vehículo'),FONT(,,,400),AT(4044,0),LINE(0)
+            STRING('Garant'),FONT(,,,400),AT(3604,0),LINE(0)
+            STRING('Cant. plac.'),FONT(,,,400),AT(2939,0),LINE(0)
+            STRING('Pos.'),FONT(,,,400),AT(2658,0),LINE(0)
+            STRING('F. baja'),FONT(,,,400),AT(2210,0),LINE(0)
+            STRING('F. alta'),FONT(,,,400),AT(1731,0),LINE(0)
+            STRING('Caja'),FONT(,,,400),AT(1419,0),LINE(0)
+            STRING('Placa'),FONT(,,,400),AT(1000,0),LINE(0)
+            STRING('Tipo'),FONT(,,,400),AT(550,0),LINE(0)
+            STRING('Número'),FONT(,,,400),AT(33,0),LINE(0)
+          END
+_REPORT_  BREAK
+            HEADER,ALONE,AT(394,813,,10298)
+              TEXT('Baterías Saman. Ordenación de acuerdo a si es nueva/reparada y número'),FONT('Times New Roman',20,0,4796),CENTER,RESIZE,AT(3229,2083,3229,2083)
+              STRING('desde'),AT(4252,3744),LINE(18)
+              STRING('hasta'),AT(5429,3744),LINE(18)
+              STRING(@n5),USE(desde),AT(4710,3744),LINE(18)
+              STRING(@n5),USE(hasta),AT(5814,3744),LINE(18)
+              STRING('nuevas:'),AT(3679,3328),LINE(16)
+              STRING(@s1),USE(nuerep),AT(4189,3328),LINE(16)
+            END
+_TOTALS_    BREAK
+Detail1       DETAIL,FONT('Arial',8,0),AT(0,219,,168)
+                STRING(@n6),USE(HIS:NUMERO),AT(51,0),LINE(0)
+                STRING(@s9),USE(HIS:TIPO),AT(509,0,466),LINE(0)
+                STRING(@s4),USE(HIS:PLACA),AT(1026,0),LINE(0)
+                STRING(@s3),USE(HIS:CAJA),AT(1390,0),LINE(0)
+                STRING(@D17),USE(HIS:FECHA1),AT(1692,0,427),LINE(0)
+                STRING(@d17),USE(HIS:FECHA2),AT(2200,0,406),LINE(0)
+                STRING(@s1),USE(HIS:POSIC),AT(2700,0),LINE(0)
+                STRING(@n6),USE(HIS:CANTPLACAS),AT(3036,0),LINE(0)
+                STRING(@n6),USE(HIS:GARANT),AT(3564,0),LINE(0)
+                STRING(@s25),USE(HIS:VEHICULO),AT(4059,0,1104),LINE(0)
+                STRING(@s20),USE(CLI:Apellido),AT(5491,0,978),LINE(0)
+                STRING(@s20),USE(CLI:Nombres),AT(6483,0,978),LINE(0)
+              END
+            END
+          END
+          FOOTER,FONT('Times New Roman',9,0,4796),AT(394,9908,7462,390)
+            STRING('Page '),AT(9021,195)
+            STRING(@n5),PAGENO,AT(9302,195)
+          END
+desde   RUNTIME(@n5),PROMPT('desde registro:')
+hasta   RUNTIME(@n5),PROMPT('hasta registro:')
+nuerep  RUNTIME(@s1),PROMPT('indique S(nueva) o N(reparada)'),VALID('UPPER( nuerep) = ''S'' or UPPER( nuerep) = ''N''')
+        END
+Placas  REPORT,FONT('Arial',10),LANDSCAPE,PRE(Código),THOUS,AT(1000,1442,9688,5028),LINE(-2),MARGINS(1000,1221,1000,1390) !Baterías ordenadas por placas
+          HEADER,FONT('Times New Roman',11,0,4796),AT(1000,1221,,221)
+            STRING('NUEVA'),AT(51,0),LINE(0)
+            STRING('NUMERO'),AT(594,0),LINE(0)
+            STRING('TIPO'),AT(1272,0),LINE(0)
+            STRING('PLACA'),AT(1951,0),LINE(0)
+            STRING('CAJA'),AT(2473,0),LINE(0)
+            STRING('FECHA 1'),AT(2880,0),LINE(0)
+            STRING('FECHA 2'),AT(3537,0),LINE(0)
+            STRING('POSIC'),AT(4194,0),LINE(0)
+            STRING('VEHICULO'),AT(4664,0),LINE(0)
+            STRING('Tama ñ o'),AT(6343,0),LINE(0)
+            STRING('Apellido'),AT(7000,0),LINE(0)
+            STRING('Nombres'),AT(8366,0),LINE(0)
+            LINE,LINEWIDTH(15),AT(0,151,9688,0)
+          END
+_REPORT_  BREAK
+            HEADER,ALONE,AT(1000,1221,,6860)
+              TEXT('Baterías Saman. Ordenación por placas'),FONT('Times New Roman',20,0,4796),CENTER,RESIZE,AT(3229,2083,3229,2083)
+            END
+_TOTALS_    BREAK
+Detail1       DETAIL,FONT('Arial',8,0),AT(0,0,,336)
+                STRING(@s1),USE(HIS:NUEVA),AT(51,0,490),LINE(0)
+                STRING(@n6),USE(HIS:NUMERO),AT(594,0,625),LINE(0)
+                STRING(@s9),USE(HIS:TIPO),AT(1272,0),LINE(0)
+                STRING(@s4),USE(HIS:PLACA),AT(1951,0,469),LINE(0)
+                STRING(@s3),USE(HIS:CAJA),AT(2473,0,354),LINE(0)
+                STRING(@D17),USE(HIS:FECHA1),AT(2880,0,604),LINE(0)
+                STRING(@d17),USE(HIS:FECHA2),AT(3537,0,604),LINE(0)
+                STRING(@s1),USE(HIS:POSIC),AT(4194,0,417),LINE(0)
+                STRING(@s25),USE(HIS:VEHICULO),AT(4664,0),LINE(0)
+                STRING(@s20),USE(CLI:Apellido),AT(7000,0),LINE(0)
+                STRING(@s20),USE(CLI:Nombres),AT(8366,0),LINE(0)
+              END
+            END
+          END
+          FOOTER,FONT('Times New Roman',9,0,4796),AT(1000,6470,,390)
+            STRING('Page '),AT(9021,195)
+            STRING(@n5),PAGENO,AT(9302,195)
+          END
+        END
+cajas   REPORT,FONT('Arial',10),LANDSCAPE,PRE(Código),THOUS,AT(1000,1442,9688,5028),LINE(-2),MARGINS(1000,1221,1000,1390) !Baterías ordenadas por cajas
+          HEADER,FONT('Times New Roman',11,0,4796),AT(1000,1221,,221)
+            STRING('NUEVA'),AT(51,0),LINE(0)
+            STRING('NUMERO'),AT(594,0),LINE(0)
+            STRING('TIPO'),AT(1272,0),LINE(0)
+            STRING('PLACA'),AT(1951,0),LINE(0)
+            STRING('CAJA'),AT(2473,0),LINE(0)
+            STRING('FECHA 1'),AT(2880,0),LINE(0)
+            STRING('FECHA 2'),AT(3537,0),LINE(0)
+            STRING('POSIC'),AT(4194,0),LINE(0)
+            STRING('VEHICULO'),AT(4664,0),LINE(0)
+            STRING('Tama ñ o'),AT(6343,0),LINE(0)
+            STRING('Apellido'),AT(7000,0),LINE(0)
+            STRING('Nombres'),AT(8366,0),LINE(0)
+            LINE,LINEWIDTH(15),AT(0,151,9688,0)
+          END
+_REPORT_  BREAK
+            HEADER,ALONE,AT(1000,1221,,6860)
+              TEXT('Baterías Saman. Ordenación por cajas<13,10>'),FONT('Times New Roman',20,0,4796),CENTER,RESIZE,AT(3229,2083,3229,2083)
+            END
+_TOTALS_    BREAK
+Detail1       DETAIL,FONT('Arial',8,0),AT(0,0,,336)
+                STRING(@s1),USE(HIS:NUEVA),AT(51,0,490),LINE(0)
+                STRING(@n6),USE(HIS:NUMERO),AT(594,0,625),LINE(0)
+                STRING(@s9),USE(HIS:TIPO),AT(1272,0),LINE(0)
+                STRING(@s4),USE(HIS:PLACA),AT(1951,0,469),LINE(0)
+                STRING(@s3),USE(HIS:CAJA),AT(2473,0,354),LINE(0)
+                STRING(@D17),USE(HIS:FECHA1),AT(2880,0,604),LINE(0)
+                STRING(@d17),USE(HIS:FECHA2),AT(3537,0,604),LINE(0)
+                STRING(@s1),USE(HIS:POSIC),AT(4194,0,417),LINE(0)
+                STRING(@s25),USE(HIS:VEHICULO),AT(4664,0),LINE(0)
+                STRING(@s20),USE(CLI:Apellido),AT(7000,0),LINE(0)
+                STRING(@s20),USE(CLI:Nombres),AT(8366,0),LINE(0)
+              END
+            END
+          END
+          FOOTER,FONT('Times New Roman',9,0,4796),AT(1000,6470,,390)
+            STRING('Page '),AT(9021,195)
+            STRING(@n5),PAGENO,AT(9302,195)
+          END
+        END
+Código_cliente REPORT,FONT('Arial',10),LANDSCAPE,PRE(Código),THOUS,AT(1000,1442,9688,5028),LINE(-2),MARGINS(1000,1221,1000,1390) !Baterías ordenadas por código del cliente
+          HEADER,FONT('Times New Roman',11,0,4796),AT(1000,1221,,221)
+            STRING('NUEVA'),AT(51,0),LINE(0)
+            STRING('NUMERO'),AT(594,0),LINE(0)
+            STRING('TIPO'),AT(1272,0),LINE(0)
+            STRING('PLACA'),AT(1951,0),LINE(0)
+            STRING('CAJA'),AT(2473,0),LINE(0)
+            STRING('FECHA 1'),AT(2880,0),LINE(0)
+            STRING('FECHA 2'),AT(3537,0),LINE(0)
+            STRING('POSIC'),AT(4194,0),LINE(0)
+            STRING('VEHICULO'),AT(4664,0),LINE(0)
+            STRING('Tama ñ o'),AT(6343,0),LINE(0)
+            STRING('Apellido'),AT(7000,0),LINE(0)
+            STRING('Nombres'),AT(8366,0),LINE(0)
+            LINE,LINEWIDTH(15),AT(0,151,9688,0)
+          END
+_REPORT_  BREAK
+            HEADER,ALONE,AT(1000,1221,,6860)
+              TEXT('Baterías Saman. Ordenación de acuerdo al código del cliente<13,10>'),FONT('AvantGarde Bk BT',20,0,4796),CENTER,RESIZE,AT(3229,2083,3229,2083)
+            END
+_TOTALS_    BREAK
+Detail1       DETAIL,FONT('Arial',8,0),AT(0,0,,336)
+                STRING(@s1),USE(HIS:NUEVA),AT(51,0,490),LINE(0)
+                STRING(@n6),USE(HIS:NUMERO),AT(594,0,625),LINE(0)
+                STRING(@s9),USE(HIS:TIPO),AT(1272,0),LINE(0)
+                STRING(@s4),USE(HIS:PLACA),AT(1951,0,469),LINE(0)
+                STRING(@s3),USE(HIS:CAJA),AT(2473,0,354),LINE(0)
+                STRING(@D17),USE(HIS:FECHA1),AT(2880,0,604),LINE(0)
+                STRING(@d17),USE(HIS:FECHA2),AT(3537,0,604),LINE(0)
+                STRING(@s1),USE(HIS:POSIC),AT(4194,0,417),LINE(0)
+                STRING(@s25),USE(HIS:VEHICULO),AT(4664,0),LINE(0)
+                STRING(@s20),USE(CLI:Apellido),AT(7000,0),LINE(0)
+                STRING(@s20),USE(CLI:Nombres),AT(8366,0),LINE(0)
+              END
+            END
+          END
+          FOOTER,FONT('Times New Roman',9,0,4796),AT(1000,6470,,390)
+            STRING('Page '),AT(9021,195)
+            STRING(@n5),PAGENO,AT(9302,195)
+          END
+        END
+Tipo_batería REPORT,FONT('Arial',10),LANDSCAPE,PRE(Código),THOUS,AT(1000,1442,9688,5028),LINE(-2),MARGINS(1000,1221,1000,1390) !Baterías ordenadas por tipo
+          HEADER,FONT('Times New Roman',11,0,4796),AT(1000,1221,,221)
+            STRING('NUEVA'),AT(51,0),LINE(0)
+            STRING('NUMERO'),AT(594,0),LINE(0)
+            STRING('TIPO'),AT(1272,0),LINE(0)
+            STRING('PLACA'),AT(1951,0),LINE(0)
+            STRING('CAJA'),AT(2473,0),LINE(0)
+            STRING('FECHA 1'),AT(2880,0),LINE(0)
+            STRING('FECHA 2'),AT(3537,0),LINE(0)
+            STRING('POSIC'),AT(4194,0),LINE(0)
+            STRING('VEHICULO'),AT(4664,0),LINE(0)
+            STRING('Tama ñ o'),AT(6343,0),LINE(0)
+            STRING('Apellido'),AT(7000,0),LINE(0)
+            STRING('Nombres'),AT(8366,0),LINE(0)
+            LINE,LINEWIDTH(15),AT(0,151,9688,0)
+          END
+_REPORT_  BREAK
+            HEADER,ALONE,AT(1000,1221,,6860)
+              TEXT('Baterías Saman. Ordenación por tipo de batería<13,10>'),FONT('Impact',20,0,4796),CENTER,RESIZE,AT(3229,2083,3229,2083)
+            END
+_TOTALS_    BREAK
+Detail1       DETAIL,FONT('Arial',8,0),AT(0,0,,336)
+                STRING(@s1),USE(HIS:NUEVA),AT(51,0,490),LINE(0)
+                STRING(@n6),USE(HIS:NUMERO),AT(594,0,625),LINE(0)
+                STRING(@s9),USE(HIS:TIPO),AT(1272,0),LINE(0)
+                STRING(@s4),USE(HIS:PLACA),AT(1951,0,469),LINE(0)
+                STRING(@s3),USE(HIS:CAJA),AT(2473,0,354),LINE(0)
+                STRING(@D17),USE(HIS:FECHA1),AT(2880,0,604),LINE(0)
+                STRING(@d17),USE(HIS:FECHA2),AT(3537,0,604),LINE(0)
+                STRING(@s1),USE(HIS:POSIC),AT(4194,0,417),LINE(0)
+                STRING(@s25),USE(HIS:VEHICULO),AT(4664,0),LINE(0)
+                STRING(@s20),USE(CLI:Apellido),AT(7000,0),LINE(0)
+                STRING(@s20),USE(CLI:Nombres),AT(8366,0),LINE(0)
+              END
+            END
+          END
+          FOOTER,FONT('Times New Roman',9,0,4796),AT(1000,6470,,390)
+            STRING('Page '),AT(9021,195)
+            STRING(@n5),PAGENO,AT(9302,195)
+          END
+        END
+
+[FILES]
+CLIENTES FILE,PRE(CLI),DRIVER('TOPSPEED',,'CW2tps16','TPS'),CREATE,RECLAIM !Registro de clientes
+Porcodi   KEY(CLI:Código),NOCASE,OPT,PRIMARY !Por código cliente
+apeynom   KEY(CLI:Apellido,CLI:Nombres),DUP,NOCASE,OPT !Por ape. y nom.
+__Record  RECORD
+Código      USHORT,PICTURE(@n6) !Código del Cliente
+Apellido    STRING(20),PICTURE(@s20)
+Nombres     STRING(20),PICTURE(@s20)
+Dirección   STRING(20),PICTURE(@s20)
+Localidad   STRING(20),PICTURE(@s20)
+Teléfono    STRING(12),PICTURE(@s12) !Teléfono principal
+Teléfono1   STRING(12),PICTURE(@s12) !Teléfono segundo
+CUIT        STRING(13),PICTURE(@K##-########-#K) !Nº de C.U.I.T
+          END
+        END
+TIPOS   FILE,PRE(TIP),DRIVER('TOPSPEED',,'CW2tps16','TPS'),CREATE,RECLAIM !Tipos de baterías
+principal KEY(TIP:Descripción),NOCASE,OPT,PRIMARY !Descripción
+__Record  RECORD
+Descripción STRING(9),PICTURE(@s9)
+          END
+        END
+cajas   FILE,PRE(CAJ),DRIVER('TOPSPEED',,'CW2tps16','TPS'),CREATE !Ver cajas
+KeyCódigo KEY(CAJ:Código),NOCASE,OPT !Por código de caja
+__Record  RECORD
+Código      STRING(3),PICTURE(@S4)
+Descripción STRING(15),PICTURE(@S15)
+          END
+        END
+SAMAN   FILE,PRE(HIS),DRIVER('TOPSPEED',,'CW2tps16','TPS'),CREATE,RECLAIM !Registro histórico de Baterías Saman
+principal KEY(HIS:NUEVA,HIS:NUMERO),OPT,PRIMARY !Por nue/rep y Número
+Placlave  KEY(HIS:PLACA),DUP,NOCASE,OPT !por placa
+cajas     KEY(HIS:CAJA),DUP,NOCASE,OPT !por caja
+clienclave KEY(HIS:CLIENTE),DUP,NOCASE,OPT !Por código cliente
+tipoclave KEY(HIS:TIPO),DUP,NOCASE,OPT !Por tipo
+__Record  RECORD
+NUEVA       STRING(1),PICTURE(@s1) !Si es nueva o reparada (S/N)
+NUMERO      USHORT,PICTURE(@n6) !Número de batería
+CLIENTE     USHORT,PICTURE(@n6) !Código del cliente
+TIPO        STRING(9),PICTURE(@s9) !Tipo de batería
+PLACA       STRING(4),PICTURE(@s4) !Tipo de placa
+CAJA        STRING(3),PICTURE(@s3) !Material de la caja
+FECHA1      LONG,PICTURE(@D17) !Fecha de alta
+FECHA2      LONG,PICTURE(@d17) !Fecha de baja
+POSIC       STRING(1),PICTURE(@s1) !Posición (Derecha o Izquierda)
+CANTPLACAS  USHORT,PICTURE(@n6) !Cantidad de placas
+GARANT      USHORT,PICTURE(@n6) !Tiempo de garantía
+VEHICULO    STRING(25),PICTURE(@s25) !Describa el vehículo
+Precio      ULONG,PICTURE(@n$10.2) !Valor de la batería
+Tamanio     STRING(2),PICTURE(@s2) !Si es extra small, small o normal
+          END
+        END
+Placas  FILE,PRE(PLA),DRIVER('TOPSPEED',,'CW2tps16','TPS'),CREATE,RECLAIM !Placas
+codiclave KEY(PLA:Código),NOCASE,OPT,PRIMARY !por código de placa
+descriclave KEY(PLA:Descripción),DUP,NOCASE,OPT !por descripción
+__Record  RECORD
+Código      STRING(4),PICTURE(@s4)
+Descripción STRING(15),PICTURE(@s15)
+          END
+        END
+
+[RELATIONS]
+        RELATION,ONE:MANY
+Placas    FILE(PLA:codiclave)
+SAMAN     RELATED_FILE(HIS:Placlave)
+          FILE_TO_RELATED_KEY
+            FIELD(PLA:Código,HIS:PLACA)
+          END
+          RELATED_FILE_TO_KEY
+            FIELD(HIS:PLACA,PLA:Código)
+          END
+        END
+        RELATION,ONE:MANY
+cajas     FILE(CAJ:KeyCódigo)
+SAMAN     RELATED_FILE(HIS:cajas)
+          FILE_TO_RELATED_KEY
+            FIELD(CAJ:Código,HIS:CAJA)
+          END
+          RELATED_FILE_TO_KEY
+            FIELD(HIS:CAJA,CAJ:Código)
+          END
+        END
+        RELATION,ONE:MANY
+TIPOS     FILE(TIP:principal)
+SAMAN     RELATED_FILE(HIS:tipoclave)
+          FILE_TO_RELATED_KEY
+            FIELD(TIP:Descripción,HIS:TIPO)
+          END
+          RELATED_FILE_TO_KEY
+            FIELD(HIS:TIPO,TIP:Descripción)
+          END
+        END
+        RELATION,ONE:MANY
+CLIENTES  FILE(CLI:Porcodi)
+SAMAN     RELATED_FILE(HIS:clienclave)
+          FILE_TO_RELATED_KEY
+            FIELD(CLI:Código,HIS:CLIENTE)
+          END
+          RELATED_FILE_TO_KEY
+            FIELD(HIS:CLIENTE,CLI:Código)
+          END
+        END
+
+[REPORTVIEWS]
+Sumaplacas VIEW(SAMAN),OPT,FILTER('HIS:FECHA1 >= Inicial AND HIS:FECHA1 <<= Final'),ORDER('HIS:Tamanio,HIS:FECHA1')
+          JOIN(CLI:Porcodi,HIS:CLIENTE)
+          END
+        END
+nue_rep VIEW(SAMAN),FILTER('HIS:NUEVA = UPPER(nuerep)'),RANGE('((HIS:NUMERO>=desde)AND(HIS:NUMERO<<=hasta))'),ORDER('HIS:NUEVA,HIS:NUMERO'),KEY(HIS:principal)
+          JOIN(CLI:Porcodi,HIS:CLIENTE)
+          END
+        END
+Placas  VIEW(SAMAN),ORDER('UPPER(HIS:PLACA)'),KEY(HIS:Placlave)
+          JOIN(CLI:Porcodi,HIS:CLIENTE)
+          END
+        END
+cajas   VIEW(SAMAN),ORDER('UPPER(HIS:CAJA)'),KEY(HIS:cajas)
+          JOIN(CLI:Porcodi,HIS:CLIENTE)
+          END
+        END
+Código_cliente VIEW(SAMAN),ORDER('HIS:CLIENTE'),KEY(HIS:clienclave)
+          JOIN(CLI:Porcodi,HIS:CLIENTE)
+          END
+        END
+Tipo_batería VIEW(SAMAN),ORDER('UPPER(HIS:TIPO)'),KEY(HIS:tipoclave)
+          JOIN(CLI:Porcodi,HIS:CLIENTE)
+          END
+        END
+
+[SOURCES]
+        DICTIONARY,VERSION('1.0'),DATE(72586),TIME(8537700),NAME('C:\MISDOC~1\PROGRA~1\BATERÍ~1\SAMAN.DCT')
+
+[SEARCHPATHS]
+        PATH('SAMAN.TPS','C:\MISDOC~1\PROGRA~1\BATERÍ~1\')
+        PATH('CLIENTES.TPS','C:\MISDOC~1\PROGRA~1\BATERÍ~1\')
+        PATH('TIPOS.TPS','C:\MISDOC~1\PROGRA~1\BATERÍ~1\')
+        PATH('CAJAS.TPS','C:\MISDOC~1\PROGRA~1\BATERÍ~1\')
+        PATH('PLACAS.TPS','C:\MISDOC~1\PROGRA~1\BATERÍ~1\')
+

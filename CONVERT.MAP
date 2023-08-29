@@ -1,0 +1,53 @@
+
+ Start     Length     Name               Class              Group
+
+ 0001:0000 00002H     _INST_DATA_START   FAR_DATA           _INST_DATA_GROUP 
+ 0001:0002 00002H     _INST_DATA         FAR_DATA           _INST_DATA_GROUP 
+ 0001:0004 00002H     _INST_DATA_END     FAR_DATA           _INST_DATA_GROUP 
+ 0001:0006 00002H     _INST_BSS_START    FAR_DATA           _INSTDGROUP 
+ 0001:0008 00002H     _INST_BSS          FAR_DATA           _INSTDGROUP 
+ 0001:000A 00002H     _INST_BSS_END      FAR_DATA           _INSTDGROUP 
+ 0001:000C 00194H     CONVERT_DATA       FAR_DATA           CONVERTDGROUP 
+ 0001:01A0 00214H     CONVERT_BSS        FAR_DATA           CONVERTDGROUP 
+ 0002:0000 00002H     _INIT_START        INIT_CODE          _INIT_GROUP 
+ 0002:0002 00007H     _INIT              INIT_CODE          _INIT_GROUP 
+ 0002:0009 00002H     _INIT_END          INIT_CODE          _INIT_GROUP 
+ 0003:0000 00012H     BEGDATA            DATA               DGROUP 
+ 0003:0012 0002AH     INIT_DATA          DATA               DGROUP 
+ 0003:003C 00000H     EMU_STATE          DATA               DGROUP 
+ 0003:003C 00000H     CONST              CONST              DGROUP 
+ 0003:003C 00000H     _CONST             DATA               DGROUP 
+ 0003:003C 0000AH     _DATA              DATA               DGROUP 
+ 0003:0046 00000H     BSS_START          BSS                DGROUP 
+ 0003:0046 00000H     _BSS               BSS                DGROUP 
+ 0003:0046 00000H     BSS_END            BSS                DGROUP 
+ 0003:0050 0040AH     STACK              STACK              DGROUP 
+ 0004:0000 00057H     INIT_TEXT          CODE               (none)
+ 0004:0057 000D7H     ENTERCODE          CODE               (none)
+ 0004:012E 00310H     CONVERT_TEXT       CODE               (none)
+
+  Address         Publics by Value
+
+ 0001:000C       $CLIENTES
+ 0001:003D       CLIENTES$IN::PORCODI
+ 0001:005A       CLIENTES$IN::APEYNOM
+ 0001:0079       KEYS$CLIENTES
+ 0001:0081       CLIENTES$TYPE$IN::RECORD
+ 0001:00A0       $CLIE
+ 0001:00D1       CLIE$CLI1:PORCODI
+ 0001:00EE       CLIE$CLI1:APEYNOM
+ 0001:010D       KEYS$CLIE
+ 0001:0115       CLIE$TYPE$CLI1:RECORD
+ 0001:01A0       $SOURCENAME
+ 0001:0230       $TARGETNAME
+ 0001:02C0       $COUNT
+ 0001:02C4       CLIENTES$IN::RECORD
+ 0001:033B       CLIE$CLI1:RECORD
+ 0001:033B       MEMOS$CLIENTES
+ 0001:03B2       $PROGRESS
+ 0001:03B2       MEMOS$CLIE
+ 0003:003C       __IREG
+ 0004:012E       CHECKERROR@F
+ 0004:01D8       _MAIN
+
+Program entry point at 0004:0057

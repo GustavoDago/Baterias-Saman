@@ -1,0 +1,9 @@
+-- CONVERT
+#noedit
+#system win
+#model clarion
+#pragma debug(vid=>full)
+#compile convert.clw
+#pragma link(cw2clp16.lib)
+#pragma link(cw2tps16.lib)
+#link convert.exe

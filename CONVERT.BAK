@@ -1,0 +1,123 @@
+                  PROGRAM
+
+                  MAP
+                    CheckError(),LONG
+                  END
+
+SourceName        STRING(144)
+TargetName        STRING(144)
+Count             ULONG
+
+SAMANx              FILE,DRIVER('TOPSPEED'),NAME(SourceName),RECLAIM,PRE(IN:)
+PRINCIPAL             KEY(+IN::NUEVA,+IN::NUMERO),OPT,PRIMARY
+PLACLAVE              KEY(+IN::PLACA),DUP,OPT,NOCASE
+CAJAS                 KEY(+IN::CAJA),DUP,OPT,NOCASE
+CLIENCLAVE            KEY(+IN::CLIENTE),DUP,OPT,NOCASE
+TIPOCLAVE             KEY(+IN::TIPO),DUP,OPT,NOCASE
+RECORD                RECORD
+NUEVA                   STRING(1)
+NUMERO                  USHORT
+CLIENTE                 USHORT
+TIPO                    STRING(9)
+PLACA                   STRING(4)
+CAJA                    STRING(3)
+FECHA1                  LONG
+FECHA2                  LONG
+POSIC                   STRING(1)
+CANTPLACAS              USHORT
+GARANT                  USHORT
+VEHICULO                STRING(25)
+PRECIO                  ULONG
+TAMAÑO                  STRING(2)
+                      END
+                    END
+SAMAN               FILE,DRIVER('TOPSPEED'),NAME(TargetName),CREATE,RECLAIM,PRE(HIS)
+PRINCIPAL             KEY(+HIS:NUEVA,+HIS:NUMERO),OPT,PRIMARY
+Placlave              KEY(+HIS:PLACA),DUP,OPT,NOCASE
+cajas                 KEY(+HIS:CAJA),DUP,OPT,NOCASE
+clienclave            KEY(+HIS:CLIENTE),DUP,OPT,NOCASE
+tipoclave             KEY(+HIS:TIPO),DUP,OPT,NOCASE
+RECORD                RECORD
+NUEVA                   STRING(1)
+NUMERO                  USHORT
+CLIENTE                 USHORT
+TIPO                    STRING(9)
+PLACA                   STRING(4)
+CAJA                    STRING(3)
+FECHA1                  LONG
+FECHA2                  LONG
+POSIC                   STRING(1)
+CANTPLACAS              USHORT
+GARANT                  USHORT
+VEHICULO                STRING(25)
+Precio                  ULONG
+Tamanio                 STRING(2)
+                      END
+                    END
+PROGRESS WINDOW('Converting File'),AT(,,107,33),FONT('MS Sans Serif',8),GRAY,CENTER,DOUBLE
+                    STRING('Converting Record #:'),AT(4,13,,)
+                    STRING(@n8),AT(74,12,24,12),USE(Count)
+                  END
+
+  CODE
+  SourceName = 'C:\SISTEM~1\SAMAN.TPS'
+  TargetName = 'CONV0001'
+
+  OPEN(SAMANx)
+  IF CheckError() THEN RETURN.
+  SET(SAMANx)
+  CREATE(SAMAN)
+  IF CheckError() THEN RETURN.
+  OPEN(SAMAN)
+  IF CheckError() THEN RETURN.
+
+  STREAM(SAMANx)
+  STREAM(SAMAN)
+
+  OPEN(Progress)
+
+  LOOP
+    NEXT(SAMANx)
+    IF ErrorCode() = 33 THEN BREAK.
+    DO AssignRecord
+    APPEND(SAMAN)
+    IF CheckError() THEN RETURN.
+    Count += 1
+    DISPLAY(?Count)
+  END
+
+  FLUSH(SAMANx)
+  FLUSH(SAMAN)
+
+  BUILD(SAMAN)
+  CLOSE(SAMANx)
+  CLOSE(SAMAN)
+
+  COPY(SAMAN,'C:\SISTEM~1\SAMAN.TPS')
+  REMOVE(SAMAN)
+
+AssignRecord      ROUTINE
+  CLEAR(HIS:Record)
+  HIS:NUEVA = IN::NUEVA
+  HIS:NUMERO = IN::NUMERO
+  HIS:CLIENTE = IN::CLIENTE
+  HIS:TIPO = IN::TIPO
+  HIS:PLACA = IN::PLACA
+  HIS:CAJA = IN::CAJA
+  HIS:FECHA1 = IN::FECHA1
+  HIS:FECHA2 = IN::FECHA2
+  HIS:POSIC = IN::POSIC
+  HIS:CANTPLACAS = IN::CANTPLACAS
+  HIS:GARANT = IN::GARANT
+  HIS:VEHICULO = IN::VEHICULO
+  HIS:PRECIO = IN::PRECIO
+  HIS:TAMANIO = IN::TAMAÑO
+
+CheckError        FUNCTION
+  CODE
+  IF ERRORCODE() THEN
+    IF MESSAGE('Error: '& ERROR()) THEN
+      RETURN ERRORCODE()
+    END
+  END
+  RETURN 0
